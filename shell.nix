@@ -5,20 +5,21 @@ with pkgs;
 mkShell {
   name = "474";
   buildInputs = [
-    python37
-    python37Packages.numpy
-    python37Packages.scikitlearn
-    python37Packages.scipy
-    python37Packages.matplotlib
-    python37Packages.pandas
+    python3
+    python3Packages.numpy
+    python3Packages.scikitlearn
+    python3Packages.scipy
+    python3Packages.matplotlib
+    python3Packages.pandas
 
     # Deep learning libraries
-    python37Packages.pytorchWithCuda
-    python37Packages.opencv
-    python37Packages.transformers
-    python37Packages.torchvision
+    python3Packages.pytorchWithCuda
+    python3Packages.opencv4
+    python3Packages.transformers
+    python3Packages.torchvision
 
     # Notebook
-    python37Packages.notebook
+    python3Packages.notebook
+    python3Packages.ipywidgets
   ];
 }

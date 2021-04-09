@@ -3,5 +3,5 @@ date,time,task
 2/17,1 hour,Started to research image captioning - read and understood two papers
 2/18,1.5 hours,Decided to work on image captioning - wrote proposal
 3/17,2 hours,Looked through available datasets - selected Flickr
-3/22,2 hours,Configured development environment with cuda and notebook
-3/24,2.5 hours,Downloaded and explored dataset - set up torch dataset
+3/22,2.5 hours,Configured development environment with cuda and notebook
+3/24,2.5 hours,Downloaded and explored dataset - set up torch dataset and debugged some things
