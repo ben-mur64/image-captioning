@@ -6,6 +6,10 @@ mkShell {
   name = "474";
   buildInputs = [
     python3
+    python3Packages.virtualenv
+    python3Packages.venvShellHook
+    python3Packages.pip
+
     python3Packages.numpy
     python3Packages.scikitlearn
     python3Packages.scipy
@@ -17,9 +21,11 @@ mkShell {
     python3Packages.opencv4
     python3Packages.transformers
     python3Packages.torchvision
+    python3Packages.nltk
 
     # Notebook
     python3Packages.notebook
     python3Packages.ipywidgets
+
   ];
 }

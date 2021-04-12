@@ -6,3 +6,4 @@ date,time,task
 3/22,2.5 hours,Configured development environment with cuda and notebook
 3/24,2.5 hours,Downloaded and explored dataset - set up torch dataset and debugged some things
 4/9,5 hours,Set up models - worked through issues - started training
+4/10,3 hours,Switch to Google Colab after training on my machine proved to be too cumbersome
