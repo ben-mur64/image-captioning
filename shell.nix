@@ -12,6 +12,9 @@ mkShell {
     python3Packages.scipy
     python3Packages.matplotlib
     python3Packages.pandas
+    python3Packages.h5py
+    python3Packages.imageio
+    python3Packages.pillow
 
     # Deep learning libraries
     python3Packages.pytorchWithCuda
