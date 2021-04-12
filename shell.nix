@@ -6,9 +6,6 @@ mkShell {
   name = "474";
   buildInputs = [
     python3
-    python3Packages.virtualenv
-    python3Packages.venvShellHook
-    python3Packages.pip
 
     python3Packages.numpy
     python3Packages.scikitlearn
