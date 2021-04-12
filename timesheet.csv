@@ -7,3 +7,6 @@ date,time,task
 3/24,2.5 hours,Downloaded and explored dataset - set up torch dataset and debugged some things
 4/9,5 hours,Set up models - worked through issues - started training
 4/10,3 hours,Switch to Google Colab after training on my machine proved to be too cumbersome
+4/11,2 hour,Analyze results from inital tests - fix bugs with output generation - decide it's not worth training more
+4/12,5 hours,Start attention based decoder - begin training
+

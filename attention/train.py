@@ -1,4 +1,5 @@
 import time
+import tqdm
 import torch.backends.cudnn as cudnn
 import torch.optim
 import torch.utils.data
@@ -146,6 +147,7 @@ def train(train_loader, encoder, decoder, criterion, encoder_optimizer, decoder_
     :param decoder_optimizer: optimizer to update decoder's weights
     :param epoch: epoch number
     """
+    pbar = tqdm(total=len(train_loader))
 
     decoder.train()  # train mode (dropout and batchnorm is used)
     encoder.train()
@@ -175,8 +177,8 @@ def train(train_loader, encoder, decoder, criterion, encoder_optimizer, decoder_
 
         # Remove timesteps that we didn't decode at, or are pads
         # pack_padded_sequence is an easy trick to do this
-        scores, _ = pack_padded_sequence(scores, decode_lengths, batch_first=True)
-        targets, _ = pack_padded_sequence(targets, decode_lengths, batch_first=True)
+        scores = pack_padded_sequence(scores, decode_lengths, batch_first=True).data
+        targets = pack_padded_sequence(targets, decode_lengths, batch_first=True).data
 
         # Calculate loss
         loss = criterion(scores, targets)
@@ -211,14 +213,11 @@ def train(train_loader, encoder, decoder, criterion, encoder_optimizer, decoder_
 
         # Print status
         if i % print_freq == 0:
-            print('Epoch: [{0}][{1}/{2}]\t'
-                  'Batch Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
-                  'Data Load Time {data_time.val:.3f} ({data_time.avg:.3f})\t'
-                  'Loss {loss.val:.4f} ({loss.avg:.4f})\t'
-                  'Top-5 Accuracy {top5.val:.3f} ({top5.avg:.3f})'.format(epoch, i, len(train_loader),
-                                                                          batch_time=batch_time,
-                                                                          data_time=data_time, loss=losses,
-                                                                          top5=top5accs))
+            pbar.set_description('Loss {loss.val:.4f} ({loss.avg:.4f}) Top-5 Accuracy {top5.val:.3f} ({top5.avg:.3f})'.format(loss=losses, top5=top5accs))
+
+        pbar.update(1)
+
+    pbar.close()
 
 
 def validate(val_loader, encoder, decoder, criterion):
@@ -230,6 +229,8 @@ def validate(val_loader, encoder, decoder, criterion):
     :param criterion: loss layer
     :return: BLEU-4 score
     """
+    pbar = tqdm(total=len(val_loader))
+
     decoder.eval()  # eval mode (no dropout or batchnorm)
     if encoder is not None:
         encoder.eval()
@@ -265,8 +266,8 @@ def validate(val_loader, encoder, decoder, criterion):
             # Remove timesteps that we didn't decode at, or are pads
             # pack_padded_sequence is an easy trick to do this
             scores_copy = scores.clone()
-            scores, _ = pack_padded_sequence(scores, decode_lengths, batch_first=True)
-            targets, _ = pack_padded_sequence(targets, decode_lengths, batch_first=True)
+            scores = pack_padded_sequence(scores, decode_lengths, batch_first=True).data
+            targets = pack_padded_sequence(targets, decode_lengths, batch_first=True).data
 
             # Calculate loss
             loss = criterion(scores, targets)
@@ -283,12 +284,9 @@ def validate(val_loader, encoder, decoder, criterion):
             start = time.time()
 
             if i % print_freq == 0:
-                print('Validation: [{0}/{1}]\t'
-                      'Batch Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
-                      'Loss {loss.val:.4f} ({loss.avg:.4f})\t'
-                      'Top-5 Accuracy {top5.val:.3f} ({top5.avg:.3f})\t'.format(i, len(val_loader), batch_time=batch_time,
-                                                                                loss=losses, top5=top5accs))
+                pbar.set_description('Loss {loss.val:.4f} ({loss.avg:.4f}) Top-5 Accuracy {top5.val:.3f} ({top5.avg:.3f})'.format(loss=losses, top5=top5accs))
 
+            pbar.update(1)
             # Store references (true captions), and hypothesis (prediction) for each image
             # If for n images, we have n hypotheses, and references a, b, c... for each image, we need -
             # references = [[ref1a, ref1b, ref1c], [ref2a, ref2b], ...], hypotheses = [hyp1, hyp2, ...]
@@ -316,6 +314,7 @@ def validate(val_loader, encoder, decoder, criterion):
         # Calculate BLEU-4 scores
         bleu4 = corpus_bleu(references, hypotheses)
 
+        pbar.close()
         print(
             '\n * LOSS - {loss.avg:.3f}, TOP-5 ACCURACY - {top5.avg:.3f}, BLEU-4 - {bleu}\n'.format(
                 loss=losses,
