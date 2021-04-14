@@ -8,5 +8,8 @@ date,time,task
 4/9,5 hours,Set up models - worked through issues - started training
 4/10,3 hours,Switch to Google Colab after training on my machine proved to be too cumbersome
 4/11,2 hour,Analyze results from inital tests - fix bugs with output generation - decide it's not worth training more
-4/12,5 hours,Start attention based decoder - begin training
-
+4/12,5 hours,Wrote attention-based model - added visualization tools
+4/13,1 hour,Analyzed initial results from attention-based model, decided more training was necessary
+4/13,2 hours,Started writing final report
+4/14,1 hour,Analyzed and evaluated final results
+4/14,1 hour,Finished final report

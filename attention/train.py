@@ -36,7 +36,7 @@ alpha_c = 1.  # regularization parameter for 'doubly stochastic attention', as i
 best_bleu4 = 0.  # BLEU-4 score right now
 print_freq = 100  # print training/validation stats every __ batches
 fine_tune_encoder = False  # fine-tune encoder?
-checkpoint = None  # path to checkpoint, None if none
+checkpoint = "../data/BEST_checkpoint_flickr30k_5_cap_per_img_5_min_word_freq.pth.tar"  # path to checkpoint, None if none
 
 
 def main():
@@ -66,6 +66,7 @@ def main():
                                              lr=encoder_lr) if fine_tune_encoder else None
 
     else:
+        print("Loading checkpoint from " + checkpoint)
         checkpoint = torch.load(checkpoint)
         start_epoch = checkpoint['epoch'] + 1
         epochs_since_improvement = checkpoint['epochs_since_improvement']
