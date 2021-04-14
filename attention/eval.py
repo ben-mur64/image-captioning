@@ -11,7 +11,7 @@ from tqdm import tqdm
 # Parameters
 data_folder = '../data'  # folder with data files saved by create_input_files.py
 data_name = 'flickr30k_5_cap_per_img_5_min_word_freq'  # base name shared by data files
-checkpoint = './BEST_checkpoint_flickr30k_5_cap_per_img_5_min_word_freq.pth.tar'  # model checkpoint
+checkpoint = '../data/BEST_checkpoint_flickr30k_5_cap_per_img_5_min_word_freq.pth.tar'  # model checkpoint
 word_map_file = '../data/WORDMAP_flickr30k_5_cap_per_img_5_min_word_freq.json'  # word map, ensure it's the same the data was encoded with and the model was trained with
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # sets device for model and PyTorch tensors
 cudnn.benchmark = True  # set to true only if inputs to model are fixed size; otherwise lot of computational overhead
